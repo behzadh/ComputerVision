@@ -1,3 +1,8 @@
+'''
+This code is written to design Rock Paper Scissors game. 
+This code randomly choose an option (rock, paper, or scissors) and then captures the user's choice by webcam to find the winner
+@author: Behzad on 7 August 2022
+'''
 import random
 from traceback import print_tb
 import cv2
@@ -8,12 +13,12 @@ import time
 class ComputerVision:
     def __init__(self, num_lives=1, max_score=2, num_counter=5):
         ## Initializing all attributes
-        self.num_lives = num_lives # if player wants to play multiple sets of max_score, num_lives should be > 1
+        self.num_lives = num_lives # If player wants to play multiple sets of max_score, num_lives should be > 1
         self.max_score = max_score
         self.user_score = 0
         self.computer_score = 0
-        self.counter = num_counter # sets the number of seconds for the count down
-        # setting the computer choices and load the keras model
+        self.counter = num_counter # Sets the number of seconds for the count down
+        # Setting the computer choices and load the keras model
         self.computer_selections = ['Rock', 'Paper', 'Scissor']
         self.model = load_model('keras_model.h5', compile=False)
 
@@ -22,12 +27,12 @@ class ComputerVision:
         return random.choice(self.computer_selections).lower()
     
     def set_text(self, frame, text, x, y, color=(0,0,255), thickness=4, size=1):
-        ## Putting text on the screen setup
+        ## Setup to put text on the screen
         if x is not None and y is not None:
             cv2.putText(frame, text, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, size, color, thickness)
 
     def text_position(self, text, frame):
-        ## Get x, y coordinatess of the text on the screen
+        ## Get x, y coordinates of the text on the screen
         font = cv2.FONT_HERSHEY_SIMPLEX
         textsize = cv2.getTextSize(text, font, 1, 2)[0]
         text_X = (frame.shape[1] - textsize[0]) / 2
@@ -61,7 +66,7 @@ class ComputerVision:
                 if (time.time() > counter_timeout_text and time.time() < final_timeout):
                     count_str = 'Count down ' + str(counter)
                     x_pos, y_pos = self.text_position(count_str, frame)
-                    self.set_text(frame, count_str, x_pos, y_pos) # Draw it on webcam screen
+                    self.set_text(frame, count_str, x_pos, y_pos) # Draw counter on the webcam screen
                     counter_timeout_text+=0.03333
                 if (time.time() > counter_timeout and time.time() < final_timeout):
                     counter-=1
@@ -76,7 +81,7 @@ class ComputerVision:
                     if max_input == 0:
                         ret, frame = self.cap.read()
                         self.draw_text("Sorry we couldn't recognize your choice, please enter it manually", frame) # Draw it on webcam screen
-                        user_input = input('Please enter your choice: Rock Paper or Scissor -> ').lower() # get the user's choice manually in the terminal
+                        user_input = input('Please enter your choice: Rock Paper or Scissor -> ').lower() # Get the user's choice manually in the terminal
                     elif max_input == 1:
                         user_input = 'rock'
                     elif max_input == 2:
@@ -87,13 +92,13 @@ class ComputerVision:
             else:
                 break
         ret, frame = self.cap.read()
-        self.draw_text(f"Bot's choice is * {comp_choice} * and yours is * {user_input} *", frame) # Draw Bot and user's choices on the webcam screen
+        self.draw_text(f"Bot's choice is * {comp_choice} * and yours is * {user_input} *", frame) # Draw Bot and user's choices on the screen
         return user_input.lower()
 
     def get_winner(self, computer_choice, user_choice):
         ## Define the rules of the game
         if computer_choice == user_choice:
-            # if both choices are equal, the game will be repeated
+            # If both choices are equal, the game will be repeated
             ret1, frame1 = self.cap.read()
             self.draw_text("It is a draw! Let's try it again..", frame1) # Draw it on the webcam screen
         elif computer_choice == 'rock':
@@ -131,15 +136,15 @@ class ComputerVision:
                     self.get_winner(com_choice,usr_choice)
                     if com_choice != usr_choice:
                         ret1, frame1 = self.cap.read()
-                        self.draw_text(f'Your score {self.user_score} - {self.computer_score} Computer score', frame1) # Draw scores on the webcam screen
+                        self.draw_text(f'Your score {self.user_score} - {self.computer_score} Computer score', frame1) # Draw scores on the screen
                 else:
                     break
             if (self.computer_score == self.max_score) or (self.user_score == self.max_score):
-                # If user wants to play moltiple sets, each time there is a winer one game will be finish
+                # If user wants to play moltiple sets, each set will have a winner then one set will be reduced
                 self.num_lives = self.num_lives - 1
                 if self.num_lives != 0:
                     ret1, frame1 = self.cap.read()
-                    self.draw_text(f"This set is fnished, there are {self.num_lives} sets left. Please press 'c' to continue", frame1) # Draw number of remaining sets on the webcam screen
+                    self.draw_text(f"This set is fnished, there are {self.num_lives} sets left. Please press 'c' to continue", frame1) # Draw number of remaining sets on the screen
                     if cv2.waitKey(0) & 0xFF == ord('c'):
                         # After each set, user should press c to start a new set
                         pass
@@ -152,13 +157,13 @@ class ComputerVision:
                     ret1, frame1 = self.cap.read()
                     self.draw_text("Opss.. You lost! :(", frame1) # Draw result on the screen
 
-        # release the cap object after the loop 
+        # Release the cap object after the loop 
         self.cap.release()
         # Destroy all windows
         cv2.destroyAllWindows()
 
 def main():
-    ## main function 
+    ## Main function 
     ComputerVision(max_score=3).play()
 
 if __name__ == '__main__':

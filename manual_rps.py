@@ -1,3 +1,8 @@
+'''
+This code is written to design Rock Paper Scissors game. 
+This code randomly choose an option (rock, paper, or scissors) and then ask the user for an input to find the winner
+@author: Behzad on 5 August 2022
+'''
 import random
 
 class ComputerVision:
