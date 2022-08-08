@@ -4,7 +4,6 @@ This code randomly choose an option (rock, paper, or scissors) and then captures
 @author: Behzad on 7 August 2022
 '''
 import random
-from traceback import print_tb
 import cv2
 from keras.models import load_model
 import numpy as np
