@@ -159,7 +159,9 @@ The result is a list of probabilities for each class and it picks the class with
 
 - The code will print the countdown and all other inforamation (like results) in the webcam display.
 
-![alt text](https://github.com/behzadh/Hangman/blob/main/hangman_scsh.png?raw=true)
+![alt text-1](https://github.com/behzadh/Hangman/blob/main/images/count1.png?raw=true) ![alt text-1](https://github.com/behzadh/Hangman/blob/main/images/count0.png?raw=true)
+
+![alt text-3](https://github.com/behzadh/Hangman/blob/main/images/choices.png?raw=true) ![alt text-4](https://github.com/behzadh/Hangman/blob/main/images/results.png?raw=true)
 
 ## Conclution
 
