@@ -159,8 +159,7 @@ The result is a list of probabilities for each class and it picks the class with
 
 - The code will print the countdown and all other inforamation (like results) in the webcam display.
 
-<img src="https://github.com/behzadh/ComputerVision/blob/main/images/count1.png" width="300"> <img src="https://github.com/behzadh/ComputerVision/blob/main/images/count0.png" width="300">
-<img src="https://github.com/behzadh/ComputerVision/blob/main/images/choices.png" width="300"> <img src="https://github.com/behzadh/ComputerVision/blob/main/images/results.png" width="300">
+<img src="https://github.com/behzadh/ComputerVision/blob/main/images/count1.png" width="300"> <img src="https://github.com/behzadh/ComputerVision/blob/main/images/choices.png" width="300"> <img src="https://github.com/behzadh/ComputerVision/blob/main/images/results.png" width="300">
 
 ## Conclution
 
