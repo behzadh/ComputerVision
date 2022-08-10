@@ -141,20 +141,17 @@ class ComputerVision:
             if (self.computer_score == self.max_score) or (self.user_score == self.max_score):
                 # If user wants to play moltiple sets, each set will have a winner then one set will be reduced
                 self.num_lives = self.num_lives - 1
+                ret1, frame1 = self.cap.read()
+                if self.user_score == self.max_score:
+                    self.draw_text("Congratulations! You won the game :)", frame1, 3000) # Draw result on the screen for 3 seconds
+                else:
+                    self.draw_text("Opss.. You lost! :(", frame1) # Draw result on the screen
                 if self.num_lives != 0:
                     ret1, frame1 = self.cap.read()
                     self.draw_text(f"This set is fnished, there are {self.num_lives} sets left. Please press 'c' to continue", frame1) # Draw number of remaining sets on the screen
                     if cv2.waitKey(0) & 0xFF == ord('c'):
                         # After each set, user should press c to start a new set
                         pass
-
-            if self.num_lives == 0:
-                if self.user_score == self.max_score:
-                    ret1, frame1 = self.cap.read()
-                    self.draw_text("Congratulations! You won the game :)", frame1, 3000) # Draw result on the screen for 3 seconds
-                elif self.computer_score == self.max_score:
-                    ret1, frame1 = self.cap.read()
-                    self.draw_text("Opss.. You lost! :(", frame1) # Draw result on the screen
 
         # Release the cap object after the loop 
         self.cap.release()
