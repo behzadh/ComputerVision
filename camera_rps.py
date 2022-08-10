@@ -128,31 +128,28 @@ class ComputerVision:
         self.data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32) # Convert images to a numpy array
         while self.num_lives > 0:
             self.user_score, self.computer_score = 0, 0
-            while self.computer_score < self.max_score:
-                if self.user_score < self.max_score:
-                    com_choice = self.get_computer_choice() # Get bot's choice
-                    usr_choice = self.get_prediction(com_choice) # Predict user's choice (com_choice added as an arg to be used in a print output, see line 90)
-                    self.get_winner(com_choice,usr_choice)
-                    if com_choice != usr_choice:
-                        ret1, frame1 = self.cap.read()
-                        self.draw_text(f'Your score {self.user_score} - {self.computer_score} Computer score', frame1) # Draw scores on the screen
-                else:
-                    break
-            if (self.computer_score == self.max_score) or (self.user_score == self.max_score):
-                # If user wants to play moltiple sets, each set will have a winner then one set will be reduced
-                self.num_lives = self.num_lives - 1
-                ret1, frame1 = self.cap.read()
-                if self.user_score == self.max_score:
-                    self.draw_text("Congratulations! You won the game :)", frame1, 3000) # Draw result on the screen for 3 seconds
-                else:
-                    self.draw_text("Opss.. You lost! :(", frame1) # Draw result on the screen
-                if self.num_lives != 0:
+            while self.computer_score < self.max_score and self.user_score < self.max_score:
+                com_choice = self.get_computer_choice() # Get bot's choice
+                usr_choice = self.get_prediction(com_choice) # Predict user's choice (com_choice added as an arg to be used in a print output, see line 90)
+                self.get_winner(com_choice,usr_choice)
+                if com_choice != usr_choice:
                     ret1, frame1 = self.cap.read()
-                    self.draw_text(f"This set is fnished, there are {self.num_lives} sets left. Please press 'c' to continue", frame1) # Draw number of remaining sets on the screen
-                    if cv2.waitKey(0) & 0xFF == ord('c'):
-                        # After each set, user should press c to start a new set
-                        pass
-
+                    self.draw_text(f'Your score {self.user_score} - {self.computer_score} Computer score', frame1) # Draw scores on the screen
+                else:
+                    pass
+            # If user wants to play moltiple sets, each set will have a winner then one set will be reduced
+            self.num_lives = self.num_lives - 1
+            ret1, frame1 = self.cap.read()
+            if self.user_score == self.max_score:
+                self.draw_text("Congratulations! You won the game :)", frame1, 3000) # Draw result on the screen for 3 seconds
+            else:
+                self.draw_text("Opss.. You lost! :(", frame1) # Draw result on the screen
+            if self.num_lives != 0:
+                ret1, frame1 = self.cap.read()
+                self.draw_text(f"This set is fnished, there are {self.num_lives} sets left. Please press 'c' to continue", frame1) # Draw number of remaining sets on the screen
+                if cv2.waitKey(0) & 0xFF == ord('c'):
+                    # After each set, user should press c to start a new set
+                    pass
         # Release the cap object after the loop 
         self.cap.release()
         # Destroy all windows
@@ -160,7 +157,7 @@ class ComputerVision:
 
 def main():
     ## Main function 
-    ComputerVision(max_score=3).play()
+    ComputerVision(num_lives=2,max_score=1).play()
 
 if __name__ == '__main__':
     main()
