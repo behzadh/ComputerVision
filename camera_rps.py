@@ -100,27 +100,14 @@ class ComputerVision:
             # If both choices are equal, the game will be repeated
             ret1, frame1 = self.cap.read()
             self.draw_text("It is a draw! Let's try it again..", frame1) # Draw it on the webcam screen
-        elif computer_choice == 'rock':
-            if user_choice == 'paper':
-                self.user_score += 1
-                print('Congratulations, you won!')
-            else:
-                self.computer_score += 1
-                print('Computer won!')
-        elif computer_choice == 'paper':
-            if user_choice == 'scissor':
-                self.user_score += 1
-                print('Congratulations, you won!')
-            else:
+        elif (computer_choice == 'rock' and user_choice == 'scissor') or \
+             (computer_choice == 'paper' and user_choice == 'rock') or \
+             (computer_choice == 'scissor' and user_choice == 'paper'):
                 self.computer_score += 1
                 print('Computer won!')
         else:
-            if user_choice == 'rock':
                 self.user_score += 1
                 print('Congratulations, you won!')
-            else:
-                self.computer_score += 1
-                print('Computer won!')
 
     def play(self):
         ## This function runs the play until there will be a winer
@@ -135,8 +122,6 @@ class ComputerVision:
                 if com_choice != usr_choice:
                     ret1, frame1 = self.cap.read()
                     self.draw_text(f'Your score {self.user_score} - {self.computer_score} Computer score', frame1) # Draw scores on the screen
-                else:
-                    pass
             # If user wants to play moltiple sets, each set will have a winner then one set will be reduced
             self.num_lives = self.num_lives - 1
             ret1, frame1 = self.cap.read()
