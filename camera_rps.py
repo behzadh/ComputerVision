@@ -83,8 +83,7 @@ class ComputerVision:
                         self.draw_text("Sorry we couldn't recognize your choice, please enter it manually", frame) # Draw it on webcam screen
                         user_input = input('Please enter your choice: Rock Paper or Scissor -> ').lower() # Get the user's choice manually in the terminal
                     else:
-                        get_user_input = [key for key, value in self.users_dict.items() if value == max_input]
-                        user_input = get_user_input[0]
+                        user_input = ''.join([key for key, value in self.users_dict.items() if value == max_input]) # gets user choice based on the model probablity
                     break
             else:
                 break
