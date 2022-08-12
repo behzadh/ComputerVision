@@ -19,6 +19,7 @@ class ComputerVision:
         self.counter = num_counter # Sets the number of seconds for the count down
         # Setting the computer choices and load the keras model
         self.computer_selections = ['Rock', 'Paper', 'Scissor']
+        self.users_dict = {'rock': 1, 'paper': 2,'scissor': 3}
         self.model = load_model('keras_model.h5', compile=False)
 
     def get_computer_choice(self):
@@ -81,12 +82,9 @@ class ComputerVision:
                         ret, frame = self.cap.read()
                         self.draw_text("Sorry we couldn't recognize your choice, please enter it manually", frame) # Draw it on webcam screen
                         user_input = input('Please enter your choice: Rock Paper or Scissor -> ').lower() # Get the user's choice manually in the terminal
-                    elif max_input == 1:
-                        user_input = 'rock'
-                    elif max_input == 2:
-                        user_input = 'paper'
                     else:
-                        user_input = 'scissor'
+                        get_user_input = [key for key, value in self.users_dict.items() if value == max_input]
+                        user_input = get_user_input[0]
                     break
             else:
                 break
